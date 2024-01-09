@@ -404,6 +404,7 @@
                         gameEnter.style.display = null;
                         player.style.left = "127px";
                         player.style.top = gameHeight - playerHeight + "px";
+                        s.innerHTML = 0;
                     }
         
 
