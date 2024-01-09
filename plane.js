@@ -327,7 +327,7 @@
                     if(enemy.hp == 0){
                         //delete enemy
                         clearInterval(enemy.timer);
-                        enemy.src = "../img/explosion_by_benthedwarf_d6bbrxe.gif"
+                        enemy.src = "./img/explosion_by_benthedwarf_d6bbrxe.gif"
                         //mark dead enemy
                         enemy.dead = true;
                         //calc score
