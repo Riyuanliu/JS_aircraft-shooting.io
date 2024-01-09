@@ -23,8 +23,8 @@
 
             var playerImage = player.querySelector("img"); // Select the image element inside #player
             var originalImageSrc = playerImage.src; // Keep track of the original image source
-            var leftImageSrc = "../img/Player_L.png"; // Set the path to the left-facing image
-            var rightImageSrc = "../img/Player_R.png";
+            var leftImageSrc = "./img/Player_L.png"; // Set the path to the left-facing image
+            var rightImageSrc = "./img/Player_R.png";
         
             var lastMouseX = 0;
             var sensitivity = 2; // Adjust this value to set the sensitivity
@@ -327,7 +327,7 @@
                     if(enemy.hp == 0){
                         //delete enemy
                         clearInterval(enemy.timer);
-                        enemy.src = "../img/explosion_by_benthedwarf_d6bbrxe.gif"
+                        enemy.src = "./img/explosion_by_benthedwarf_d6bbrxe.gif"
                         //mark dead enemy
                         enemy.dead = true;
                         //calc score
