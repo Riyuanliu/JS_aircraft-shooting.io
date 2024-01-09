@@ -21,39 +21,39 @@
             enemysP = $("enemys"),
             s = $("scores").firstElementChild.firstElementChild;
 
-            var playerImage = player.querySelector("img"); // Select the image element inside #player
-            var originalImageSrc = playerImage.src; // Keep track of the original image source
-            var leftImageSrc = "./img/Player_L.png"; // Set the path to the left-facing image
-            var rightImageSrc = "./img/Player_R.png";
-        
-            var lastMouseX = 0;
-            var sensitivity = 2; // Adjust this value to set the sensitivity
-            var delayTimer = null; // Timer for the delay
-        
-            document.addEventListener("mousemove", function(evt) {
-                if(!gameStatus) return;
-                var e = evt || window.event;
-                var mouseX = e.clientX; // Get the X coordinate of the mouse pointer
-        
-                // Check if the mouse movement exceeds the sensitivity threshold
-                if (Math.abs(mouseX - lastMouseX) > sensitivity) {
-                    clearTimeout(delayTimer); // Clear the delay timer if it's already running
-        
-                    // Check if the mouse is moving to the left (direction)
-                    if (mouseX < lastMouseX) {
-                        playerImage.src = leftImageSrc; // Change the image to the left-facing one
-                    } else {
-                        playerImage.src = rightImageSrc; // Change the image to the right-facing one
-                    }
-        
-                    lastMouseX = mouseX; // Update lastMouseX for the next comparison
+        var playerImage = player.querySelector("img"); // Select the image element inside #player
+        var originalImageSrc = playerImage.src; // Keep track of the original image source
+        var leftImageSrc = "./img/Player_L.png"; // Set the path to the left-facing image
+        var rightImageSrc = "./img/Player_R.png";
+    
+        var lastMouseX = 0;
+        var sensitivity = 2; // Adjust this value to set the sensitivity
+        var delayTimer = null; // Timer for the delay
+    
+        document.addEventListener("mousemove", function(evt) {
+            if(!gameStatus) return;
+            var e = evt || window.event;
+            var mouseX = e.clientX; // Get the X coordinate of the mouse pointer
+    
+            // Check if the mouse movement exceeds the sensitivity threshold
+            if (Math.abs(mouseX - lastMouseX) > sensitivity) {
+                clearTimeout(delayTimer); // Clear the delay timer if it's already running
+    
+                // Check if the mouse is moving to the left (direction)
+                if (mouseX < lastMouseX) {
+                    playerImage.src = leftImageSrc; // Change the image to the left-facing one
                 } else {
-                    // If the movement is less than sensitivity, set a delay to revert to the original image
-                    delayTimer = setTimeout(function() {
-                        playerImage.src = originalImageSrc; // Revert to the original image
-                    }, 20); // Set your desired delay time in milliseconds (here it's set to 500ms)
+                    playerImage.src = rightImageSrc; // Change the image to the right-facing one
                 }
-            });
+    
+                lastMouseX = mouseX; // Update lastMouseX for the next comparison
+            } else {
+                // If the movement is less than sensitivity, set a delay to revert to the original image
+                delayTimer = setTimeout(function() {
+                    playerImage.src = originalImageSrc; // Revert to the original image
+                }, 20); // Set your desired delay time in milliseconds (here it's set to 500ms)
+            }
+        });
         
         var gameWidth = getStyle(game, "width"),
             gameHeight = getStyle(game, "height");
@@ -64,8 +64,11 @@
         var playerWidth = getStyle(player, "width"),
             playerHeight = getStyle(player, "height");
 
-            var bulletWidth = 6,
-                bulletHeight = 14;
+        var bulletWidth = 6,
+            bulletHeight = 14;
+
+        const resumeButton = document.getElementById('resumeButton');
+
 
         var gameStatus = false, //current game stat
             a = null, //timer for creating the bullet
@@ -76,6 +79,9 @@
             enemys = [], //list of all enemy
             scores =0; //score
 
+        function togglePauseScreen() {
+            pauseScreen.style.display = pauseScreen.style.display === 'none' ? 'flex' : 'none';
+        }
         gameStart.firstElementChild.onclick = function() {
             gameStart.style.display = "none";
             gameEnter.style.display = "block";
@@ -88,6 +94,7 @@
                     if(!gameStatus){
                         //intinat score
                         scores = 0;
+                        togglePauseScreen(); 
                         // game start
                         this.onmousemove = playerplaneMove;
                         //start moving background;
@@ -104,6 +111,7 @@
                     }else{
                         //pause game
                         this.onmousemove = null;
+                        togglePauseScreen(); 
                         //clear create enemy and create bullet timer
                         clearInterval(a);
                         clearInterval(b);
@@ -118,7 +126,7 @@
                 }
             }
         };
-
+    
         function playerplaneMove(evt) {
             var e = evt || window.event;
             var mouse_x = e.x || e.pageX,
